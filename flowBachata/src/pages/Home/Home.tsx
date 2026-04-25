@@ -5,14 +5,10 @@ export default function Home() {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // 🔥 SOLO UN VIDEO (LORENA ELIMINADO)
-  const videos = [
-    "/videos/Judith.mp4",
-  ];
+  const videos = ["/videos/Judith.mp4"];
 
   const [current, setCurrent] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [needsUserAction, setNeedsUserAction] = useState(false);
   const [playKey, setPlayKey] = useState(0);
 
   const changeVideo = (newIndex: number) => {
@@ -37,10 +33,8 @@ export default function Home() {
         video.muted = false;
         await video.play();
         setIsPlaying(true);
-        setNeedsUserAction(false);
       } catch {
         setIsPlaying(false);
-        setNeedsUserAction(true);
       }
     };
 
@@ -55,10 +49,7 @@ export default function Home() {
       video.muted = false;
       await video.play();
       setIsPlaying(true);
-      setNeedsUserAction(false);
-    } catch {
-      setNeedsUserAction(true);
-    }
+    } catch {}
   };
 
   const arrowBtn =
@@ -139,8 +130,6 @@ export default function Home() {
 
         <div className="w-full max-w-4xl bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4">
 
-          {/* ❌ ELIMINADO: "Video 1/2" COMPLETAMENTE */}
-
           <div className="relative w-full aspect-video max-h-[70vh] bg-black rounded-xl overflow-hidden">
 
             <video
@@ -155,26 +144,17 @@ export default function Home() {
               <source src={videos[current]} type="video/mp4" />
             </video>
 
-            {/* PLAY CENTRAL */}
             {!isPlaying && (
               <button
                 onClick={handleUserPlay}
                 className="absolute inset-0 flex items-center justify-center"
               >
                 <div className="w-16 h-16 rounded-full bg-black/50 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-xl hover:scale-110 transition">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-7 h-7 text-white ml-1"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
+                  ▶
                 </div>
               </button>
             )}
 
-            {/* FLECHAS (ahora inútiles pero no rompen nada) */}
             <button className={`${arrowBtn} left-3`} onClick={prevVideo}>
               ←
             </button>

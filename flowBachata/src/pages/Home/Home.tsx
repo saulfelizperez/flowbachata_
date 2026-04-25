@@ -5,9 +5,9 @@ export default function Home() {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // 🔥 SOLO UN VIDEO (LORENA ELIMINADO)
   const videos = [
     "/videos/Judith.mp4",
-    "/videos/Lorena.mp4",
   ];
 
   const [current, setCurrent] = useState(0);
@@ -93,15 +93,7 @@ export default function Home() {
 
           <button
             onClick={() => navigate("/login")}
-            className="
-              px-4 py-2 rounded-xl font-semibold cursor-pointer select-none
-              transition-all duration-300 ease-out transform-gpu
-              bg-white text-orange-600 shadow-md
-              hover:scale-125 hover:-translate-y-2
-              hover:bg-orange-100 hover:text-orange-700
-              hover:shadow-[0_20px_40px_rgba(255,120,0,0.6)]
-              active:scale-95 active:translate-y-0
-            "
+            className={navBtn}
           >
             Iniciar sesión
           </button>
@@ -144,26 +136,10 @@ export default function Home() {
 
       {/* VIDEO */}
       <div className="flex justify-center mt-12 px-6">
+
         <div className="w-full max-w-4xl bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4">
 
-          {/* INDICADOR ESTILO FLOWBACHATA */}
-          <div className="flex justify-center mb-3">
-            <div
-              className="
-                px-5 py-2 rounded-2xl
-                bg-white/10 backdrop-blur-xl
-                border border-white/20
-
-                text-lg font-extrabold
-                bg-gradient-to-r from-white via-yellow-100 to-white
-                text-transparent bg-clip-text
-
-                shadow-[0_0_20px_rgba(255,120,0,0.4)]
-              "
-            >
-              Video {current + 1}/{videos.length}
-            </div>
-          </div>
+          {/* ❌ ELIMINADO: "Video 1/2" COMPLETAMENTE */}
 
           <div className="relative w-full aspect-video max-h-[70vh] bg-black rounded-xl overflow-hidden">
 
@@ -198,7 +174,7 @@ export default function Home() {
               </button>
             )}
 
-            {/* FLECHAS */}
+            {/* FLECHAS (ahora inútiles pero no rompen nada) */}
             <button className={`${arrowBtn} left-3`} onClick={prevVideo}>
               ←
             </button>

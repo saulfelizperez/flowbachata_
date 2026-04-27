@@ -52,9 +52,6 @@ export default function Home() {
     } catch {}
   };
 
-  const arrowBtn =
-    "absolute top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white shadow-lg transition hover:scale-110 hover:bg-black/60 active:scale-95";
-
   const navBtn =
     "px-6 py-3 rounded-xl font-semibold cursor-pointer select-none " +
     "transition-all duration-300 ease-out transform-gpu " +
@@ -70,47 +67,27 @@ export default function Home() {
       {/* HEADER */}
       <div className="relative flex items-center justify-center p-6">
 
-        <h1 className="
-          text-4xl font-extrabold px-8 py-3 rounded-2xl
-          bg-white/10 backdrop-blur-xl border border-white/20
-          shadow-[0_0_30px_rgba(255,120,0,0.4)]
-          bg-gradient-to-r from-white via-yellow-100 to-white
-          text-transparent bg-clip-text
-        ">
+        <h1 className="text-4xl font-extrabold">
           FlowBachata 🔥
         </h1>
 
         <div className="absolute right-6 flex gap-3">
-
-          <button
-            onClick={() => navigate("/login")}
-            className={navBtn}
-          >
+          <button onClick={() => navigate("/login")} className={navBtn}>
             Iniciar sesión
           </button>
 
           <button
             onClick={() => navigate("/register")}
-            className="
-              px-4 py-2 rounded-xl font-semibold cursor-pointer select-none
-              transition-all duration-300 ease-out transform-gpu
-              bg-white/10 text-white border border-white/40 shadow-md
-              hover:scale-125 hover:-translate-y-2
-              hover:bg-white/20 hover:border-white
-              hover:shadow-[0_20px_40px_rgba(255,120,0,0.4)]
-              active:scale-95 active:translate-y-0
-            "
+            className="px-4 py-2 rounded-xl font-semibold bg-white/10 text-white border border-white/40"
           >
             Registrarse
           </button>
-
         </div>
 
       </div>
 
       {/* NAV */}
       <div className="flex justify-center mt-10 gap-4 flex-wrap">
-
         <button onClick={() => navigate("/classes")} className={navBtn}>
           Academias
         </button>
@@ -122,15 +99,13 @@ export default function Home() {
         <button onClick={() => navigate("/transport")} className={navBtn}>
           Transporte
         </button>
-
       </div>
 
       {/* VIDEO */}
       <div className="flex justify-center mt-12 px-6">
+        <div className="w-full max-w-4xl bg-white/10 rounded-2xl p-4">
 
-        <div className="w-full max-w-4xl bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4">
-
-          <div className="relative w-full aspect-video max-h-[70vh] bg-black rounded-xl overflow-hidden">
+          <div className="relative w-full aspect-video bg-black rounded-xl overflow-hidden">
 
             <video
               key={playKey}
@@ -144,24 +119,25 @@ export default function Home() {
               <source src={videos[current]} type="video/mp4" />
             </video>
 
+            {/* PLAY / PAUSE BUTTON */}
             {!isPlaying && (
               <button
                 onClick={handleUserPlay}
                 className="absolute inset-0 flex items-center justify-center"
               >
-                <div className="w-16 h-16 rounded-full bg-black/50 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-xl hover:scale-110 transition">
-                  ▶
+                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white shadow-lg transition hover:scale-110 active:scale-95">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="white"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M8 5v14l11-7-11-7z" />
+                  </svg>
                 </div>
               </button>
             )}
-
-            <button className={`${arrowBtn} left-3`} onClick={prevVideo}>
-              ←
-            </button>
-
-            <button className={`${arrowBtn} right-3`} onClick={nextVideo}>
-              →
-            </button>
 
           </div>
 

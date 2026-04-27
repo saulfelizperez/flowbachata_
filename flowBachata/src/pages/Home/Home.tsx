@@ -5,9 +5,8 @@ export default function Home() {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // 🔥 VIDEO CLOUDINARY (CORRECTO, STREAMING DIRECTO)
   const videos = [
-    "https://res.cloudinary.com/dymhz0u0v/video/upload/SOCIAL_BY_J.ESCUDERO.PHOTO_27_eho7hv.mp4"
+    "https://res.cloudinary.com/dymhz0u0v/video/upload/v1777306215/SOCIAL_BY_J.ESCUDERO.PHOTO_27_eho7hv.mp4"
   ];
 
   const [current, setCurrent] = useState(0);
@@ -27,17 +26,26 @@ export default function Home() {
     changeVideo((current - 1 + videos.length) % videos.length);
   };
 
+  // 🔥 AUTOPLAY MEJORADO (Vercel + Chrome + móvil)
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     const tryPlay = async () => {
       try {
-        video.muted = true; // obligatorio para autoplay en Chrome/Vercel
-        video.playsInline = true;
-        await video.play();
+        video.muted = true;        // obligatorio para autoplay
+        video.playsInline = true;  // móvil iOS
+        video.loop = true;         // mejora experiencia
+        video.currentTime = 0;
+
+        const playPromise = video.play();
+
+        if (playPromise !== undefined) {
+          await playPromise;
+        }
+
         setIsPlaying(true);
-      } catch {
+      } catch (err) {
         setIsPlaying(false);
       }
     };
@@ -45,6 +53,7 @@ export default function Home() {
     tryPlay();
   }, [playKey, current]);
 
+  // 🔥 PLAY MANUAL SI AUTOPLAY FALLA
   const handleUserPlay = async () => {
     const video = videoRef.current;
     if (!video) return;
@@ -70,7 +79,6 @@ export default function Home() {
 
       {/* HEADER */}
       <div className="relative flex items-center justify-center p-6">
-
         <h1 className="text-4xl font-extrabold">
           FlowBachata 🔥
         </h1>
@@ -87,7 +95,6 @@ export default function Home() {
             Registrarse
           </button>
         </div>
-
       </div>
 
       {/* NAV */}
@@ -117,28 +124,21 @@ export default function Home() {
               className="w-full h-full object-contain"
               playsInline
               controls
+              preload="metadata"
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
             >
               <source src={videos[current]} type="video/mp4" />
             </video>
 
-            {/* PLAY BUTTON */}
+            {/* PLAY BUTTON SI FALLA AUTOPLAY */}
             {!isPlaying && (
               <button
                 onClick={handleUserPlay}
                 className="absolute inset-0 flex items-center justify-center"
               >
-                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white shadow-lg transition hover:scale-110 active:scale-95">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="white"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M8 5v14l11-7-11-7z" />
-                  </svg>
+                <div className="w-14 h-14 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-2xl shadow-lg">
+                  ▶
                 </div>
               </button>
             )}

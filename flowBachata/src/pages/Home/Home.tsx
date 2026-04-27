@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
-import Judith from "../../../assets/videos/Judith.mp4";
+import Judith from "../../assets/videos/Judith.mp4";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export default function Home() {
 
     const tryPlay = async () => {
       try {
-        video.muted = true; // importante para autoplay
+        video.muted = true;
         await video.play();
         setIsPlaying(true);
       } catch {

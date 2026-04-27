@@ -5,7 +5,7 @@ export default function Home() {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // VIDEO DESDE GOOGLE DRIVE (LINK DIRECTO)
+  // 🔥 LINK DIRECTO DRIVE (modo reproducible forzado)
   const videos = [
     "https://drive.google.com/uc?export=download&id=1ibR1fwUDfRZavMv3EPaB51lDk7NW4LtN"
   ];
@@ -19,7 +19,8 @@ export default function Home() {
 
     const tryPlay = async () => {
       try {
-        video.muted = true; // obligatorio autoplay
+        video.muted = true; // obligatorio para autoplay
+        video.playsInline = true;
         await video.play();
         setIsPlaying(true);
       } catch {
@@ -41,42 +42,89 @@ export default function Home() {
     } catch {}
   };
 
+  const navBtn =
+    "px-6 py-3 rounded-xl font-semibold cursor-pointer select-none " +
+    "transition-all duration-300 ease-out transform-gpu " +
+    "bg-white text-orange-600 shadow-md " +
+    "hover:scale-125 hover:-translate-y-2 " +
+    "hover:bg-orange-100 hover:text-orange-700 " +
+    "hover:shadow-[0_20px_40px_rgba(255,120,0,0.6)] " +
+    "active:scale-95 active:translate-y-0";
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-500 via-orange-500 to-yellow-400 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-red-500 via-orange-500 to-yellow-400 text-white">
 
-      <div className="w-full max-w-4xl bg-black rounded-xl overflow-hidden">
+      {/* HEADER */}
+      <div className="relative flex items-center justify-center p-6">
+        <h1 className="text-4xl font-extrabold">
+          FlowBachata 🔥
+        </h1>
 
-        <video
-          key={playKey}
-          ref={videoRef}
-          className="w-full h-auto"
-          playsInline
-          controls
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
-        >
-          <source src={videos[0]} type="video/mp4" />
-        </video>
-
-        {!isPlaying && (
-          <button
-            onClick={handleUserPlay}
-            className="absolute inset-0 flex items-center justify-center"
-          >
-            <div className="px-4 py-2 bg-white text-black rounded">
-              Play
-            </div>
+        <div className="absolute right-6 flex gap-3">
+          <button onClick={() => navigate("/login")} className={navBtn}>
+            Iniciar sesión
           </button>
-        )}
 
+          <button
+            onClick={() => navigate("/register")}
+            className="px-4 py-2 rounded-xl font-semibold bg-white/10 text-white border border-white/40"
+          >
+            Registrarse
+          </button>
+        </div>
       </div>
 
-      <button
-        onClick={() => navigate("/login")}
-        className="absolute top-4 right-4 bg-white text-black px-3 py-1 rounded"
-      >
-        Login
-      </button>
+      {/* NAV */}
+      <div className="flex justify-center mt-10 gap-4 flex-wrap">
+        <button onClick={() => navigate("/classes")} className={navBtn}>
+          Academias
+        </button>
+
+        <button onClick={() => navigate("/social")} className={navBtn}>
+          Sociales
+        </button>
+
+        <button onClick={() => navigate("/transport")} className={navBtn}>
+          Transporte
+        </button>
+      </div>
+
+      {/* VIDEO */}
+      <div className="flex justify-center mt-12 px-6">
+        <div className="w-full max-w-4xl bg-white/10 rounded-2xl p-4">
+
+          <div className="relative w-full aspect-video bg-black rounded-xl overflow-hidden">
+
+            <video
+              key={playKey}
+              ref={videoRef}
+              className="w-full h-full object-contain"
+              playsInline
+              controls
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+            >
+              <source src={videos[0]} type="video/mp4" />
+            </video>
+
+            {/* PLAY BUTTON */}
+            {!isPlaying && (
+              <button
+                onClick={handleUserPlay}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white shadow-lg transition hover:scale-110 active:scale-95">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                    <path d="M8 5v14l11-7-11-7z" />
+                  </svg>
+                </div>
+              </button>
+            )}
+
+          </div>
+
+        </div>
+      </div>
 
     </div>
   );

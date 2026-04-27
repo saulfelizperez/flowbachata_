@@ -5,13 +5,27 @@ export default function Home() {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // 🔥 LINK DIRECTO DRIVE (modo reproducible forzado)
+  // 🔥 VIDEO CLOUDINARY (CORRECTO, STREAMING DIRECTO)
   const videos = [
-    "https://drive.google.com/uc?export=download&id=1ibR1fwUDfRZavMv3EPaB51lDk7NW4LtN"
+    "https://res.cloudinary.com/dymhz0u0v/video/upload/SOCIAL_BY_J.ESCUDERO.PHOTO_27_eho7hv.mp4"
   ];
 
+  const [current, setCurrent] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playKey, setPlayKey] = useState(0);
+
+  const changeVideo = (newIndex: number) => {
+    setCurrent(newIndex);
+    setPlayKey((prev) => prev + 1);
+  };
+
+  const nextVideo = () => {
+    changeVideo((current + 1) % videos.length);
+  };
+
+  const prevVideo = () => {
+    changeVideo((current - 1 + videos.length) % videos.length);
+  };
 
   useEffect(() => {
     const video = videoRef.current;
@@ -19,7 +33,7 @@ export default function Home() {
 
     const tryPlay = async () => {
       try {
-        video.muted = true; // obligatorio para autoplay
+        video.muted = true; // obligatorio para autoplay en Chrome/Vercel
         video.playsInline = true;
         await video.play();
         setIsPlaying(true);
@@ -29,7 +43,7 @@ export default function Home() {
     };
 
     tryPlay();
-  }, [playKey]);
+  }, [playKey, current]);
 
   const handleUserPlay = async () => {
     const video = videoRef.current;
@@ -56,6 +70,7 @@ export default function Home() {
 
       {/* HEADER */}
       <div className="relative flex items-center justify-center p-6">
+
         <h1 className="text-4xl font-extrabold">
           FlowBachata 🔥
         </h1>
@@ -72,6 +87,7 @@ export default function Home() {
             Registrarse
           </button>
         </div>
+
       </div>
 
       {/* NAV */}
@@ -104,7 +120,7 @@ export default function Home() {
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
             >
-              <source src={videos[0]} type="video/mp4" />
+              <source src={videos[current]} type="video/mp4" />
             </video>
 
             {/* PLAY BUTTON */}
@@ -114,7 +130,13 @@ export default function Home() {
                 className="absolute inset-0 flex items-center justify-center"
               >
                 <div className="w-12 h-12 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white shadow-lg transition hover:scale-110 active:scale-95">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="white"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path d="M8 5v14l11-7-11-7z" />
                   </svg>
                 </div>

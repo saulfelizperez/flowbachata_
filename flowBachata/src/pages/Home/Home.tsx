@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
-import Judith from "../../assets/videos/Judith.mp4";
+import Judith from "../../../assets/videos/Judith.mp4";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export default function Home() {
 
     const tryPlay = async () => {
       try {
-        video.muted = true; // IMPORTANTE para que no bloquee autoplay
+        video.muted = true; // importante para autoplay
         await video.play();
         setIsPlaying(true);
       } catch {
@@ -120,7 +120,7 @@ export default function Home() {
               <source src={videos[current]} type="video/mp4" />
             </video>
 
-            {/* PLAY / PAUSE BUTTON */}
+            {/* PLAY BUTTON */}
             {!isPlaying && (
               <button
                 onClick={handleUserPlay}

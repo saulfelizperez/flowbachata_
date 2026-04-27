@@ -11,11 +11,13 @@ export default function Home() {
 
   const [current, setCurrent] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [playKey, setPlayKey] = useState(0);
 
   const changeVideo = (newIndex: number) => {
     setCurrent(newIndex);
     setPlayKey((prev) => prev + 1);
+    setIsLoaded(false);
   };
 
   const nextVideo = () => {
@@ -26,34 +28,31 @@ export default function Home() {
     changeVideo((current - 1 + videos.length) % videos.length);
   };
 
-  // 🔥 AUTOPLAY MEJORADO (Vercel + Chrome + móvil)
+  // 🔥 AUTOPLAY MÁS ROBUSTO (Vercel + Chrome + móvil)
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     const tryPlay = async () => {
       try {
-        video.muted = true;        // obligatorio para autoplay
-        video.playsInline = true;  // móvil iOS
-        video.loop = true;         // mejora experiencia
+        video.muted = true;
+        video.playsInline = true;
         video.currentTime = 0;
 
-        const playPromise = video.play();
-
-        if (playPromise !== undefined) {
-          await playPromise;
-        }
+        await video.play();
 
         setIsPlaying(true);
-      } catch (err) {
+        setIsLoaded(true);
+      } catch {
         setIsPlaying(false);
+        setIsLoaded(false);
       }
     };
 
     tryPlay();
   }, [playKey, current]);
 
-  // 🔥 PLAY MANUAL SI AUTOPLAY FALLA
+  // 🔥 PLAY MANUAL SI FALLA AUTOPLAY
   const handleUserPlay = async () => {
     const video = videoRef.current;
     if (!video) return;
@@ -62,6 +61,7 @@ export default function Home() {
       video.muted = false;
       await video.play();
       setIsPlaying(true);
+      setIsLoaded(true);
     } catch {}
   };
 
@@ -124,20 +124,21 @@ export default function Home() {
               className="w-full h-full object-contain"
               playsInline
               controls
-              preload="metadata"
+              preload="auto"
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
+              onLoadedData={() => setIsLoaded(true)} // 🔥 mejora clave
             >
               <source src={videos[current]} type="video/mp4" />
             </video>
 
-            {/* PLAY BUTTON SI FALLA AUTOPLAY */}
-            {!isPlaying && (
+            {/* 🔥 SOLO MOSTRAR SI NO ESTÁ LISTO */}
+            {!isLoaded && (
               <button
                 onClick={handleUserPlay}
                 className="absolute inset-0 flex items-center justify-center"
               >
-                <div className="w-14 h-14 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-2xl shadow-lg">
+                <div className="w-14 h-14 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-2xl">
                   ▶
                 </div>
               </button>

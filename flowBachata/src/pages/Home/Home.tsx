@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
-import Judith from "../../assets/videos/Judith.mp4";
 
 export default function Home() {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const videos = [Judith];
+  const videos = ["/videos/Judith.mp4"];
 
   const [current, setCurrent] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -31,7 +30,7 @@ export default function Home() {
 
     const tryPlay = async () => {
       try {
-        video.muted = true;
+        video.muted = true; // obligatorio para autoplay
         await video.play();
         setIsPlaying(true);
       } catch {

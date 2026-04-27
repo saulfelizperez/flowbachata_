@@ -28,18 +28,23 @@ export default function Home() {
     changeVideo((current - 1 + videos.length) % videos.length);
   };
 
-  // 🔥 AUTOPLAY MÁS ROBUSTO (Vercel + Chrome + móvil)
+  // 🔥 AUTOPLAY REAL (Vercel + Chrome + iOS safe)
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     const tryPlay = async () => {
       try {
-        video.muted = true;
+        video.muted = true;        // obligatorio para autoplay
         video.playsInline = true;
+        video.autoplay = true;
         video.currentTime = 0;
 
-        await video.play();
+        const playPromise = video.play();
+
+        if (playPromise !== undefined) {
+          await playPromise;
+        }
 
         setIsPlaying(true);
         setIsLoaded(true);
@@ -52,7 +57,7 @@ export default function Home() {
     tryPlay();
   }, [playKey, current]);
 
-  // 🔥 PLAY MANUAL SI FALLA AUTOPLAY
+  // 🔥 PLAY MANUAL SI EL NAVEGADOR BLOQUEA AUTOPLAY
   const handleUserPlay = async () => {
     const video = videoRef.current;
     if (!video) return;
@@ -123,16 +128,18 @@ export default function Home() {
               ref={videoRef}
               className="w-full h-full object-contain"
               playsInline
+              autoPlay
+              muted
               controls
               preload="auto"
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
-              onLoadedData={() => setIsLoaded(true)} // 🔥 mejora clave
+              onLoadedData={() => setIsLoaded(true)}
             >
               <source src={videos[current]} type="video/mp4" />
             </video>
 
-            {/* 🔥 SOLO MOSTRAR SI NO ESTÁ LISTO */}
+            {/* OVERLAY SOLO SI FALLA AUTOPLAY */}
             {!isLoaded && (
               <button
                 onClick={handleUserPlay}

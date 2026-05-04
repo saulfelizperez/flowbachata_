@@ -1,29 +1,24 @@
 import express from "express";
+import cors from "cors";
+
+import userRoutes from "./routes/user.routes";
+import authRoutes from "./routes/auth.routes";
+import progressRoutes from "./routes/progress.routes";
 
 const app = express();
-const PORT = 3000;
 
-// Endpoint
-app.get("/places", (req, res) => {
-  res.json([
-    {
-      id: 1,
-      name: "Bachastation",
-      type: "social",
-      days: ["domingo"],
-      music: "sensual"
-    },
-    {
-      id: 2,
-      name: "QChimba",
-      type: "Social",
-      days: ["viernes", "domingos"],
-      music: "sensual"
-    }
-  ]);
+// Middlewares globales
+app.use(cors());
+app.use(express.json());
+
+// Health check
+app.get("/api/v1/health", (req, res) => {
+  res.json({ status: "OK", message: "FlowBachata API running" });
 });
 
-// Servidor escuchando
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
+// Routes
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/progress", progressRoutes);
+
+export default app;

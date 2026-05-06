@@ -11,6 +11,9 @@ export default function Register() {
   const [password, setPassword] = useState("");
 
   const handleRegister = () => {
+    // ✅ VALIDACIÓN AÑADIDA (mínima)
+    if (!name || !email || !password) return;
+
     login({
       id: Date.now(),
       name,

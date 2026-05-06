@@ -1,6 +1,6 @@
 import { auth } from "../config/firebase";
 
-// 🔐 Obtener usuario actual desde token
+//  Obtener usuario actual desde token
 export const getCurrentUser = async (req, res) => {
   try {
     const header = req.headers.authorization;

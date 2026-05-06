@@ -1,11 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
-
-type User = {
-  id: number;
-  name: string;
-  email: string;
-};
+import type { User } from "../types/user";
 
 type AuthContextType = {
   user: User | null;

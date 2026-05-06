@@ -21,7 +21,7 @@ export default function AppRouter() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* 👇 NUEVO: RUTAS ACCESIBLES SIN LOGIN */}
+        {/* RUTAS ABIERTAS */}
         <Route path="/classes" element={<Classes />} />
         <Route path="/social" element={<Social />} />
         <Route path="/transport" element={<Transport />} />
@@ -36,6 +36,9 @@ export default function AppRouter() {
         >
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
+
+        {/* 404 */}
+        <Route path="*" element={<div>404 - Página no encontrada</div>} />
 
       </Routes>
     </BrowserRouter>

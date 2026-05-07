@@ -29,13 +29,15 @@ export default function Dashboard() {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/login", { replace: true });
   };
 
   return (
     <div className="fixed inset-0 bg-gradient-to-br from-red-500 via-orange-500 to-yellow-400 text-white overflow-auto">
+
       {/* HEADER */}
       <div className="relative flex items-center justify-center p-6">
+
         <h1 className="text-4xl font-extrabold text-center bg-gradient-to-r from-white via-yellow-100 to-orange-200 text-transparent bg-clip-text drop-shadow-[0_3px_10px_rgba(0,0,0,0.4)]">
           🔥 Dashboard FlowBachata
         </h1>
@@ -49,11 +51,14 @@ export default function Dashboard() {
             Log out
           </button>
         </div>
+
       </div>
 
       {/* CONTENT */}
       <div className="flex items-center justify-center h-[calc(100%-80px)]">
+
         <div className="text-center">
+
           <h2 className="text-2xl font-bold mb-2">
             Bienvenido {user?.name || "Bailarín"} 💃
           </h2>
@@ -63,6 +68,7 @@ export default function Dashboard() {
           </p>
 
           <div className="flex flex-col gap-3 items-center">
+
             <button
               onClick={() =>
                 openInsta("https://www.instagram.com/alpesbachatacongress")
@@ -83,9 +89,7 @@ export default function Dashboard() {
 
             <button
               onClick={() =>
-                openInsta(
-                  "https://www.instagram.com/alodominicanfestivalbarcelona/",
-                )
+                openInsta("https://www.instagram.com/alodominicanfestivalbarcelona/")
               }
               className={festivalButton}
             >
@@ -109,9 +113,13 @@ export default function Dashboard() {
             >
               A'dam Bachata Festival
             </button>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
   );
 }

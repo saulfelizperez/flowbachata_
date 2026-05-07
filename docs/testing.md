@@ -7,7 +7,7 @@ Este documento describe las pruebas realizadas manualmente para comprobar el cor
 
 ## 2. Pruebas realizadas
 
-### 🔐 Autenticación
+###  Autenticación
 
 - Registro de usuario funciona correctamente
 - Login crea usuario en contexto global
@@ -16,7 +16,7 @@ Este documento describe las pruebas realizadas manualmente para comprobar el cor
 
 ---
 
-### 🧭 Rutas (React Router)
+###  Rutas (React Router)
 
 - Página / carga correctamente (Home)
 - /login muestra formulario de login
@@ -27,7 +27,7 @@ Este documento describe las pruebas realizadas manualmente para comprobar el cor
 
 ---
 
-### 🌐 API Backend
+###  API Backend
 
 - GET /api/v1/progress/:userId devuelve datos correctamente
 - PUT /api/v1/progress/:userId actualiza progreso
@@ -36,7 +36,7 @@ Este documento describe las pruebas realizadas manualmente para comprobar el cor
 
 ---
 
-### 📊 Capa de red (Frontend)
+###  Capa de red (Frontend)
 
 - getProgress obtiene datos desde API
 - updateProgress actualiza datos correctamente
@@ -45,7 +45,7 @@ Este documento describe las pruebas realizadas manualmente para comprobar el cor
 
 ---
 
-### 🎨 UI / Responsive
+###  UI / Responsive
 
 - Diseño funciona en desktop
 - Layout responsivo básico
@@ -64,3 +64,7 @@ Este documento describe las pruebas realizadas manualmente para comprobar el cor
 ## 4. Conclusión
 
 La aplicación FlowBachata funciona correctamente en frontend y backend, cumpliendo con la arquitectura fullstack definida.
+
+
+POST
+

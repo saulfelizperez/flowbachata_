@@ -11,14 +11,17 @@ export default function Register() {
   const [password, setPassword] = useState("");
 
   const handleRegister = () => {
-    // ✅ VALIDACIÓN AÑADIDA (mínima)
     if (!name || !email || !password) return;
 
-    login({
+    const userData = {
       id: Date.now(),
       name,
       email,
-    });
+    };
+
+    const fakeToken = "fake-register-token";
+
+    login(userData, fakeToken);
 
     navigate("/dashboard");
   };

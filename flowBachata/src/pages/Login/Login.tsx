@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import { loginUser } from "../../api/auth";
 
 export default function Login() {
   const { login } = useAuth();
@@ -9,22 +10,33 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !password) return;
 
-    login({
-      id: Date.now(),
-      name: email,
-      email: email,
-    });
+    try {
+      const token = await loginUser(email, password);
 
-    navigate("/dashboard");
+      if (!token) return;
+
+      const userData = {
+        id: email,
+        name: email,
+        email: email,
+      };
+
+      login(userData, token);
+
+      navigate("/dashboard", { replace: true });
+
+    } catch (error) {
+      console.error("Error login:", error);
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-500 via-orange-500 to-yellow-400 relative">
 
-      {/* 🔙 BOTÓN VOLVER A HOME (DERECHA) */}
+      {/* 🔙 BOTÓN VOLVER A HOME */}
       <button
         onClick={() => navigate("/")}
         className="

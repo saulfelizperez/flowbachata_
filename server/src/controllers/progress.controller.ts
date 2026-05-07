@@ -1,37 +1,43 @@
 import { db } from "../config/firebase";
 
-// GET progress
-export const getProgress = async (req, res) => {
+/**
+ * GET /progress
+ */
+export const getProgress = async (req: any, res: any) => {
   try {
-    const doc = await db.collection("progress").doc(req.params.userId).get();
+    const userId = req.user.uid;
+
+    const doc = await db.collection("progress").doc(userId).get();
 
     if (!doc.exists) {
-      return res.status(404).json({ error: "No progress found" });
+      return res.status(404).json({ message: "Progress not found" });
     }
 
-    return res.json(doc.data());
+    return res.json({
+      data: doc.data(),
+    });
   } catch (error) {
-    return res.status(500).json({ error: "Server error" });
+    return res.status(500).json({ message: "Server error" });
   }
 };
 
-// UPDATE progress
-export const updateProgress = async (req, res) => {
+/**
+ * PUT /progress
+ */
+export const updateProgress = async (req: any, res: any) => {
   try {
-    const { timing, connection, musicality } = req.body;
+    const userId = req.user.uid;
 
-    await db.collection("progress").doc(req.params.userId).set(
-      {
-        timing,
-        connection,
-        musicality,
-        updatedAt: new Date(),
-      },
-      { merge: true }
-    );
+    await db.collection("progress").doc(userId).set(req.body, {
+      merge: true,
+    });
 
-    return res.json({ message: "Progress updated" });
+    const updated = await db.collection("progress").doc(userId).get();
+
+    return res.json({
+      data: updated.data(),
+    });
   } catch (error) {
-    return res.status(500).json({ error: "Server error" });
+    return res.status(500).json({ message: "Server error" });
   }
 };

@@ -3,9 +3,10 @@ import { useAuth } from "../context/AuthContext";
 import type { ReactNode } from "react";
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
 
-  if (!user) {
+  // sin usuario o sin token → no autorizado
+  if (!user || !token) {
     return <Navigate to="/login" replace />;
   }
 

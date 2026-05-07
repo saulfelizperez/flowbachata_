@@ -1,7 +1,15 @@
-import app from "./app";
+import express from "express";
+import cors from "cors";
 
-const PORT = process.env.PORT || 4000;
+import progressRoutes from "./routes/progress.routes";
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+app.use("/api/v1", progressRoutes);
+
+app.listen(4000, () => {
+  console.log("Server running on port 4000");
 });

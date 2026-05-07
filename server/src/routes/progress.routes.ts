@@ -1,9 +1,10 @@
-import { Router } from "express";
+import express from "express";
 import { getProgress, updateProgress } from "../controllers/progress.controller";
+import { verifyToken } from "../middlewares/auth.middleware";
 
-const router = Router();
+const router = express.Router();
 
-router.get("/:userId", getProgress);
-router.put("/:userId", updateProgress);
+router.get("/progress", verifyToken, getProgress);
+router.put("/progress", verifyToken, updateProgress);
 
 export default router;

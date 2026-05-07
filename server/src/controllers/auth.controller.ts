@@ -1,6 +1,26 @@
 import { auth } from "../config/firebase";
 
-//  Obtener usuario actual desde token
+// ==========================
+// REGISTER (YA NO MOCK)
+// ==========================
+export const registerUser = async (req, res) => {
+  return res.status(501).json({
+    error: "Use Firebase Client SDK in frontend to register users",
+  });
+};
+
+// ==========================
+// LOGIN (YA NO MOCK)
+// ==========================
+export const loginUser = async (req, res) => {
+  return res.status(501).json({
+    error: "Use Firebase Client SDK in frontend to login users",
+  });
+};
+
+// ==========================
+// ME (REAL)
+// ==========================
 export const getCurrentUser = async (req, res) => {
   try {
     const header = req.headers.authorization;
@@ -16,7 +36,6 @@ export const getCurrentUser = async (req, res) => {
     return res.json({
       uid: decoded.uid,
       email: decoded.email,
-      name: decoded.name || null,
     });
   } catch (error) {
     return res.status(401).json({ error: "Invalid token" });

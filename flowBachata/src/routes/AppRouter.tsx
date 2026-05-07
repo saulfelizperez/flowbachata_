@@ -26,15 +26,16 @@ export default function AppRouter() {
         <Route path="/social" element={<Social />} />
         <Route path="/transport" element={<Transport />} />
 
-        {/* PRIVADAS */}
+        {/* PRIVADAS (CORRECTO) */}
         <Route
+          path="/dashboard"
           element={
             <ProtectedRoute>
               <Layout />
             </ProtectedRoute>
           }
         >
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route index element={<Dashboard />} />
         </Route>
 
         {/* 404 */}

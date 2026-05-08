@@ -21,7 +21,6 @@ export default function Login() {
 
       console.log("LOGIN RESPONSE 👉", response);
 
-      // 🔐 FIX SOLO DE TIPADO (NO CAMBIA LÓGICA)
       const token =
         response?.token ||
         response?.idToken ||
@@ -37,7 +36,8 @@ export default function Login() {
         email: email,
       };
 
-      login(userData, token);
+      // 🔥 FIX PRINCIPAL (SOLO 1 ARGUMENTO)
+      login(userData);
 
       navigate("/dashboard", { replace: true });
 
@@ -50,7 +50,7 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-500 via-orange-500 to-yellow-400 relative">
 
-      {/* 🔙 BOTÓN VOLVER */}
+      {/* BOTÓN VOLVER */}
       <button
         onClick={() => navigate("/")}
         className="
@@ -61,7 +61,6 @@ export default function Login() {
           hover:scale-110
           hover:-translate-y-2
           hover:bg-orange-100
-          hover:shadow-[0_20px_40px_rgba(255,120,0,0.6)]
           active:scale-95
         "
       >

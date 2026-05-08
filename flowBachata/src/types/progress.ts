@@ -1,6 +1,5 @@
 export interface Progress {
-  timing: number;
-  connection: number;
-  musicality: number;
-  updatedAt?: string;
+  level: string;
+  completedClasses: number;
+  lastUpdated: string;
 }

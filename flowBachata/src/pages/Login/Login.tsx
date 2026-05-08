@@ -11,30 +11,29 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    if (!email || !password) return;
-
     try {
-      const response = await loginUser(email, password);
-
-      // 🔥 DEBUG TOTAL: ver exactamente qué devuelve el backend
-      console.log("LOGIN RESPONSE COMPLETA 👉", response);
-
-      // 🔥 intentar sacar el token en distintos formatos típicos
-      const token =
-        response?.token ||
-        response?.data?.token ||
-        response?.idToken ||
-        response;
-
-      console.log("🔥 TOKEN EXTRAÍDO 👉", token);
-
-      if (!token) {
-        console.error("❌ No se encontró token en la respuesta");
+      if (!email || !password) {
+        alert("Rellena todos los campos");
         return;
       }
 
+      const response = await loginUser({ email, password });
+
+      console.log("LOGIN RESPONSE 👉", response);
+
+      // 🔥 token flexible (por si backend cambia estructura)
+      const token =
+        response?.token ||
+        response?.idToken ||
+        response?.data?.token;
+
+      if (!token) {
+        throw new Error("No token found in response");
+      }
+
+      // 🔐 user básico (puedes mejorarlo luego con /me endpoint)
       const userData = {
-        id: email,
+        id: response?.uid || email,
         name: email,
         email: email,
       };
@@ -43,33 +42,22 @@ export default function Login() {
 
       navigate("/dashboard", { replace: true });
 
-    } catch (error) {
-      console.error("Error login:", error);
+    } catch (error: any) {
+      console.error("LOGIN ERROR:", error);
+      alert("Error iniciando sesión");
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-500 via-orange-500 to-yellow-400 relative">
 
-      {/* 🔙 BOTÓN VOLVER A HOME */}
       <button
         onClick={() => navigate("/")}
-        className="
-          absolute top-6 right-6 px-5 py-2 rounded-xl font-semibold z-50
-          bg-white text-orange-600 shadow-md
-          cursor-pointer select-none
-          transform transition-all duration-300 ease-out
-          hover:scale-110
-          hover:-translate-y-2
-          hover:bg-orange-100
-          hover:shadow-[0_20px_40px_rgba(255,120,0,0.6)]
-          active:scale-95
-        "
+        className="absolute top-6 right-6 px-5 py-2 rounded-xl font-semibold z-50 bg-white text-orange-600 shadow-md"
       >
         ← Volver
       </button>
 
-      {/* CARD */}
       <div className="w-full max-w-md p-8 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl">
 
         <h1 className="text-3xl font-bold text-white text-center">
@@ -83,7 +71,7 @@ export default function Login() {
         <div className="mt-8 space-y-5">
 
           <input
-            className="w-full px-4 py-3 rounded-xl bg-white/20 text-white outline-none focus:ring-2 focus:ring-orange-300"
+            className="w-full px-4 py-3 rounded-xl bg-white/20 text-white outline-none"
             placeholder="Tu email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -91,7 +79,7 @@ export default function Login() {
 
           <input
             type="password"
-            className="w-full px-4 py-3 rounded-xl bg-white/20 text-white outline-none focus:ring-2 focus:ring-red-300"
+            className="w-full px-4 py-3 rounded-xl bg-white/20 text-white outline-none"
             placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -99,7 +87,7 @@ export default function Login() {
 
           <button
             onClick={handleLogin}
-            className="w-full py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-red-600 via-orange-500 to-yellow-400 hover:opacity-90 transition"
+            className="w-full py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-red-600 via-orange-500 to-yellow-400"
           >
             Entrar
           </button>

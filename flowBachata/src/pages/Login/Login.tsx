@@ -17,26 +17,18 @@ export default function Login() {
         return;
       }
 
-      const response: any = await loginUser({ email, password });
+      const response = await loginUser(email, password);
 
       console.log("LOGIN RESPONSE 👉", response);
 
-      const token =
-        response?.token ||
-        response?.idToken ||
-        response?.data?.token;
-
-      if (!token) {
-        throw new Error("No token found in response");
-      }
+      const token = response.token;
 
       const userData = {
-        id: response?.uid || email,
-        name: email,
-        email: email,
+        id: response.uid,
+        name: response.email || "",
+        email: response.email || "",
       };
 
-      // 🔥 FIX REAL DEL ERROR (2 argumentos como espera AuthContext)
       login(userData, token);
 
       navigate("/dashboard", { replace: true });

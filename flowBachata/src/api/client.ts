@@ -1,7 +1,14 @@
 const API_URL = "http://localhost:4000/api/v1";
 
-import { Progress } from "../types/progress";
-import { ApiResponse } from "../types/api";
+/**
+ * Tipos genéricos de respuesta API
+ * (asegúrate de tener esto o similar en src/types/api.ts)
+ */
+export type ApiResponse<T> = {
+  success?: boolean;
+  message?: string;
+  data: T;
+};
 
 const getAuthHeaders = (token: string) => ({
   "Content-Type": "application/json",
@@ -9,41 +16,69 @@ const getAuthHeaders = (token: string) => ({
 });
 
 /**
- * Obtener progreso del usuario autenticado
+ * FETCH BASE REUTILIZABLE
  */
-export const getProgress = async (token: string): Promise<Progress> => {
-  const res = await fetch(`${API_URL}/progress`, {
-    method: "GET",
-    headers: getAuthHeaders(token),
+async function request<T>(
+  endpoint: string,
+  options: RequestInit,
+  token: string
+): Promise<ApiResponse<T>> {
+  const res = await fetch(`${API_URL}${endpoint}`, {
+    ...options,
+    headers: {
+      ...getAuthHeaders(token),
+      ...(options.headers || {}),
+    },
   });
 
+  const data = await res.json();
+
   if (!res.ok) {
-    throw new Error("Error fetching progress");
+    throw new Error(data.message || "API Error");
   }
 
-  const data: ApiResponse<Progress> = await res.json();
+  return data;
+}
 
-  return data.data;
+/**
+ * TIPOS (importa los tuyos si ya existen)
+ */
+import { Progress } from "../types/progress";
+
+/**
+ * ==========================
+ * PROGRESS - GET
+ * ==========================
+ */
+export const getProgress = async (token: string): Promise<Progress> => {
+  const response = await request<Progress>(
+    "/progress",
+    {
+      method: "GET",
+    },
+    token
+  );
+
+  return response.data;
 };
 
 /**
- * Actualizar progreso del usuario autenticado
+ * ==========================
+ * PROGRESS - UPDATE
+ * ==========================
  */
 export const updateProgress = async (
   token: string,
   dataUpdate: Partial<Progress>
 ): Promise<Progress> => {
-  const res = await fetch(`${API_URL}/progress`, {
-    method: "PUT",
-    headers: getAuthHeaders(token),
-    body: JSON.stringify(dataUpdate),
-  });
+  const response = await request<Progress>(
+    "/progress",
+    {
+      method: "PUT",
+      body: JSON.stringify(dataUpdate),
+    },
+    token
+  );
 
-  if (!res.ok) {
-    throw new Error("Error updating progress");
-  }
-
-  const result: ApiResponse<Progress> = await res.json();
-
-  return result.data;
+  return response.data;
 };

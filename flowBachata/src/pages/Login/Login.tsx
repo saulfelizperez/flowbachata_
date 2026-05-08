@@ -14,9 +14,24 @@ export default function Login() {
     if (!email || !password) return;
 
     try {
-      const token = await loginUser(email, password);
+      const response = await loginUser(email, password);
 
-      if (!token) return;
+      // 🔥 DEBUG TOTAL: ver exactamente qué devuelve el backend
+      console.log("LOGIN RESPONSE COMPLETA 👉", response);
+
+      // 🔥 intentar sacar el token en distintos formatos típicos
+      const token =
+        response?.token ||
+        response?.data?.token ||
+        response?.idToken ||
+        response;
+
+      console.log("🔥 TOKEN EXTRAÍDO 👉", token);
+
+      if (!token) {
+        console.error("❌ No se encontró token en la respuesta");
+        return;
+      }
 
       const userData = {
         id: email,
@@ -43,14 +58,11 @@ export default function Login() {
           absolute top-6 right-6 px-5 py-2 rounded-xl font-semibold z-50
           bg-white text-orange-600 shadow-md
           cursor-pointer select-none
-
           transform transition-all duration-300 ease-out
-
           hover:scale-110
           hover:-translate-y-2
           hover:bg-orange-100
           hover:shadow-[0_20px_40px_rgba(255,120,0,0.6)]
-
           active:scale-95
         "
       >
@@ -68,7 +80,6 @@ export default function Login() {
           Bienvenido de nuevo a FlowBachata
         </p>
 
-        {/* FORM */}
         <div className="mt-8 space-y-5">
 
           <input
@@ -86,7 +97,6 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          {/* LOGIN BUTTON */}
           <button
             onClick={handleLogin}
             className="w-full py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-red-600 via-orange-500 to-yellow-400 hover:opacity-90 transition"
@@ -94,7 +104,6 @@ export default function Login() {
             Entrar
           </button>
 
-          {/* REGISTER LINK */}
           <p className="text-center text-white/70 text-sm mt-4">
             ¿No tienes cuenta?{" "}
             <Link

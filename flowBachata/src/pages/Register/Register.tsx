@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../config/firebase";
+
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -10,47 +13,94 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegister = () => {
-    if (!name || !email || !password) return;
+  const handleRegister = async () => {
+    try {
+      console.log("🔥 START REGISTER");
 
-    const userData = {
-      id: Date.now(),
-      name,
-      email,
-    };
+      if (!name || !email || !password) {
+        alert("Rellena todos los campos");
+        return;
+      }
 
-    const fakeToken = "fake-register-token";
+      // 🔐 1. Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-    login(userData, fakeToken);
+      const user = userCredential.user;
 
-    navigate("/dashboard");
+      console.log("✅ FIREBASE USER:", user.uid);
+
+      // 📦 2. Backend (crear perfil)
+      const response = await fetch("http://localhost:4000/api/v1/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uid: user.uid,
+          name,
+          email: user.email,
+        }),
+      });
+
+      const data = await response.json();
+
+      console.log("📦 BACKEND RESPONSE:", data);
+
+      if (!response.ok) {
+        throw new Error("Backend failed to create user");
+      }
+
+      console.log("✅ BACKEND PROFILE CREATED");
+
+      // 💾 3. Login en contexto
+      login(
+        {
+          id: user.uid,
+          name,
+          email: user.email,
+        },
+        await user.getIdToken()
+      );
+
+      console.log("✅ LOGIN SAVED");
+
+      // 🚀 4. Redirect
+      navigate("/dashboard");
+
+      console.log("🚀 NAVIGATED");
+    } catch (error: any) {
+      console.error("❌ REGISTER ERROR:", error);
+
+      if (error.code === "auth/email-already-in-use") {
+        alert("Este email ya está registrado");
+      }
+
+      if (error.code === "auth/weak-password") {
+        alert("La contraseña es demasiado débil");
+      }
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-500 via-orange-500 to-yellow-400 relative">
 
-      {/* 🔙 BOTÓN VOLVER A LOGIN (DERECHA) */}
       <button
         onClick={() => navigate("/login")}
         className="
           absolute top-6 right-6 px-5 py-2 rounded-xl font-semibold z-50
           bg-white text-orange-600 shadow-md
-          cursor-pointer select-none
-
           transform transition-all duration-300 ease-out
-
-          hover:scale-110
-          hover:-translate-y-2
-          hover:bg-orange-100
-          hover:shadow-[0_20px_40px_rgba(255,120,0,0.6)]
-
+          hover:scale-110 hover:-translate-y-2 hover:bg-orange-100
           active:scale-95
         "
       >
         ← Volver
       </button>
 
-      {/* CARD */}
       <div className="w-full max-w-md p-8 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl">
 
         <h1 className="text-3xl font-bold text-white text-center">
@@ -61,7 +111,6 @@ export default function Register() {
           Únete a FlowBachata
         </p>
 
-        {/* FORM */}
         <div className="mt-8 space-y-5">
 
           <input
@@ -86,7 +135,6 @@ export default function Register() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          {/* REGISTER BUTTON */}
           <button
             onClick={handleRegister}
             className="w-full py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-red-600 via-orange-500 to-yellow-400 hover:opacity-90 transition"
@@ -94,7 +142,6 @@ export default function Register() {
             Crear cuenta
           </button>
 
-          {/* LOGIN LINK */}
           <Link
             to="/login"
             className="block text-center text-white/80 hover:text-white text-sm mt-4"

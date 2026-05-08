@@ -29,8 +29,7 @@ Este documento describe las pruebas realizadas manualmente para comprobar el cor
 
 ###  API Backend
 
-- GET /api/v1/progress/:userId devuelve datos correctamente
-- PUT /api/v1/progress/:userId actualiza progreso
+- GET /api/v1/users/:userId devuelve datos correctamente
 - GET /api/v1/health responde con status OK
 - CORS habilitado correctamente
 
@@ -38,8 +37,6 @@ Este documento describe las pruebas realizadas manualmente para comprobar el cor
 
 ###  Capa de red (Frontend)
 
-- getProgress obtiene datos desde API
-- updateProgress actualiza datos correctamente
 - Manejo de loading en UI
 - Manejo de errores en UI
 
@@ -62,9 +59,23 @@ Este documento describe las pruebas realizadas manualmente para comprobar el cor
 ---
 
 ## 4. Conclusión
-
+```Bash
 La aplicación FlowBachata funciona correctamente en frontend y backend, cumpliendo con la arquitectura fullstack definida.
+```
+
+POST 
 
 
-POST
+![Cuando pones el uid mal](images/POST/POST_1.png)
 
+![Cuando pones el uid bien](images/POST/POST_2.png)
+
+GET
+
+![Obtiene todos los usuarios](<images/GET/GET- sin Json.png>)
+
+DEL
+
+![Eliminacion de usuario](<images/DEL/DEL- cuando lo pones bien.png>)
+
+![Error al eliminar usuario](<images/DEL/DEL- cuando pones mal el uid.png>)

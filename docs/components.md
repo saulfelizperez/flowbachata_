@@ -1,66 +1,77 @@
-# FlowBachata - Componentes reutilizables
+# Introducción
 
-## 1. Introducción
+En esta parte del proyecto se han creado componentes reutilizables utilizando React con TypeScript.
 
-En esta fase se desarrollan componentes reutilizables utilizando React y TypeScript. Estos componentes permiten construir la interfaz de forma modular, evitando duplicación de código y facilitando el mantenimiento.
+La idea principal es construir una interfaz modular, donde cada pieza de UI se pueda reutilizar en diferentes partes de la aplicación sin repetir código.
 
----
+Esto ayuda a mantener el proyecto más ordenado, escalable y fácil de mantener.
 
-## 2. Componentes implementados
+### Componentes principales
+-- Button
 
-### Button
-Componente reutilizable para acciones del usuario.
+Componente genérico para acciones del usuario dentro de la aplicación.
 
-Props:
-- label: texto del botón
-- onClick: función a ejecutar
-- type: tipo de botón (button, submit)
-- variant: estilo visual (primary, secondary)
+Se utiliza en navegación y acciones principales.
 
----
+Props principales:
 
-### Input
+label: texto que se muestra en el botón
+onClick: función que se ejecuta al hacer click
+type: tipo de botón (button, submit)
+variant: estilo visual del botón (ej. principal o secundario)
+
+-- Input
+
 Componente reutilizable para formularios.
 
-Props:
-- type: tipo de input (text, email, password)
-- placeholder: texto de ayuda
-- value: valor del input
-- onChange: función de cambio
+Permite manejar diferentes tipos de entrada de datos de forma consistente en toda la app.
 
----
+Props principales:
 
+type: tipo de input (text, email, password)
+placeholder: texto de ayuda dentro del input
+value: valor actual del campo
+onChange: función para actualizar el estado
 ### Card
-Componente contenedor para mostrar información.
 
-Props:
-- children: contenido interno del componente
+Componente contenedor usado para agrupar información visualmente.
 
----
+Se utiliza en secciones como dashboard, clases o contenido informativo.
 
-## 3. Uso de TypeScript
+Props principales:
 
-Todos los componentes están tipados mediante interfaces, lo que permite:
-- Mayor seguridad en el código
-- Evitar errores en props
-- Mejor autocompletado
+children: contenido interno que se renderiza dentro de la tarjeta
 
----
+--- Uso de TypeScript
 
-## 4. Composición de componentes
+Todos los componentes están tipads con interfaces, lo que permite:
 
-Los componentes pueden combinarse entre sí. Por ejemplo:
-- Formularios con Input + Button
-- Tarjetas con Card + contenido dinámico
+Mayor control sobre los datos que reciben los componentes
+Reducción de errores en tiempo de desarrollo
+Mejor experiencia de autocmpletado en el editor
+Código más mantenible a largo plazo
 
----
+### Composición de componentes
 
-## 5. Estilos
+Los componentes están diseñados para combinarse entre sí fácilmente.
 
-Se utiliza Tailwind CSS para aplicar estilos rápidos y reutilizables, manteniendo consistencia visual en toda la aplicación.
+Ejemplos de uso:
 
----
+Formularios construidos con Input + Button
+Secciones visuales usando Card con contenido dinámico
+Layouts que combinan múltiples componentes reutilizables
 
-## 6. Objetivo
+### Estilos
 
-El objetivo de esta fase es construir una base de componentes reutilizables que permita escalar la interfaz de manera ordenada y profesional.
+Se utiliza Tailwind CSS como sistema de estilos principal.
+
+Esto permite:
+
+Estilos rápidos y consistentes
+Diseño responsive sin complejidad extra
+Mantener una estética uniforme en toda la aplicación (estilo RD Flow: rojo, naranja, amarillo)
+### Objetivo de esta fase
+
+El objetivo es construir una base sólida de componentes reutilizables que sirva como estructura principal de la interfaz.
+
+Esto permite escalar la aplicación de forma ordenada, evitando duplicación de código y manteniendo consistencia visual en todo FlowBachata.

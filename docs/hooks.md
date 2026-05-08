@@ -38,6 +38,7 @@ Se utiliza para mantener información persistente entre recargas de página.
 Hook para manejar formularios controlados.
 
 ### Funcionalidades:
+
 - Gestión de inputs
 - Actualización de estado del formulario
 - Reutilización en Login y Register

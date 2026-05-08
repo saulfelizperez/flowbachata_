@@ -8,7 +8,7 @@ El sistema está diseñado con una arquitectura frontend preparada para integrar
 
 ---
 
-## 2. Arquitectura general
+## Arquitectura general
 
 La aplicación sigue una arquitectura por capas:
 
@@ -44,7 +44,7 @@ La aplicación sigue una arquitectura por capas:
 
 ---
 
-## 3. Estructura de componentes
+## Estructura de componentes
 
 ### Componentes reutilizables
 
@@ -63,7 +63,7 @@ La aplicación sigue una arquitectura por capas:
 
 ---
 
-## 4. Gestión de estado
+## Gestión de estado
 
 ### Estado local
 
@@ -82,7 +82,7 @@ Se utiliza Context API para:
 
 ---
 
-## 5. Diseño de API (backend futuro)
+## Diseño de API (backend futuro)
 
 La aplicación está preparada para consumir una API REST.
 
@@ -102,20 +102,14 @@ La aplicación está preparada para consumir una API REST.
 
 ---
 
-#### Users
+### Users
 
 - GET /users/:id
 
+- DEL /users/:id
 ---
 
-#### Progress
-
-- GET /progress/:userId
-- POST /progress
-
----
-
-## 6. Tipos de datos (TypeScript)
+## Tipos de datos (TypeScript)
 
 ### Usuario
 
@@ -127,19 +121,8 @@ type User = {
 };
 ```
 
-### Progreso:
 
-```Bash
-type Progress = {
-  id: number;
-  userId: number;
-  rhythm: number;
-  technique: number;
-  musicality: number;
-};
-```
-
-- 7. Distribución de datos
+### Distribución de datos
 
 Los datos del sistema se distribuyen entre cliente y servidor según su naturaleza.
 
@@ -147,7 +130,7 @@ En el servidor se almacenan los datos persistentes, como los usuarios, la autent
 
 En el cliente se gestionan datos temporales, como el estado de la interfaz, los formularios y otros estados locales necesarios para la interacción.
 
-- 8. Flujo de datos
+### Flujo de datos
 
 El flujo de datos en la aplicación sigue el siguiente recorrido:
 
@@ -155,7 +138,7 @@ Usuario → Pages → Components → Hooks / Context → API → Backend
 
 Este flujo permite mantener una separación clara entre interfaz, lógica y datos.
 
-- 9. Decisiones de arquitectura
+### Decisiones de arquitectura
 
 Se ha elegido React junto con TypeScript para garantizar un desarrollo tipado y mantenible. La separación en capas facilita la escalabilidad del sistema y la organización del código.
 
@@ -163,6 +146,6 @@ Se utiliza Context API para el estado global por su simplicidad, evitando herram
 
 La centralización de la API en una carpeta específica permite desacoplar la lógica de red del resto de la aplicación.
 
-- 10. Objetivo del sistema
+### Objetivo del sistema
 
 El objetivo de esta arquitectura es proporcionar una base sólida que permita escalar la aplicación, mantener el código de forma sencilla, reutilizar componentes y facilitar la futura integración con un backend real mediante API REST.

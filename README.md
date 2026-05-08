@@ -9,36 +9,42 @@ Una plataforma fullstack para aprender, seguir y vivir la bachata de forma estru
 FlowBachata es una aplicación web fullstack desarrollada con React, TypeScript, Node.js y Firebase. Permite a los usuarios registrarse, iniciar sesión, acceder a un dashboard personalizado y explorar contenido relacionado con la bachata, incluyendo festivales, progreso de aprendizaje y gestión de usuario.
 
 ## Despliegue
-Plataforma	URL
-Frontend	Vercel
-Backend	Render / Cloud Server
+```Bash
+-- Plataforma	URL
+-- Frontend	Vercel
+-- Backend	Render / Cloud Server
+```
 ## Características
+```Bash
 Sistema completo de autenticación (registro + login con Firebase)
 Dashboard con contenido dinámico y personalizado por usuario
 Integración frontend + backend con API REST centralizada
 Gestión de usuarios y progreso en base de datos
 Routing protegido con React Router
+```
 ## Tecnologías
-Frontend | Uso
-Tecnología	Uso
-React	Interfaz de usuario
-TypeScript	Tipado y escalabilidad
-Tailwind CSS	Estilos rápidos y consistentes
-React Router	Navegación entre páginas
-Firebase Auth	Autenticación de usuarios
-Backend | Uso
-Tecnología	Uso
-Node.js	Servidor principal
-Express	API REST
-Firebase Admin	Verificación de tokens
-Firestore	Base de datos
-CORS	Comunicación frontend-backend
-Auxiliares | Uso
-Tecnología	Uso
-Vercel	Deploy frontend
-Render / Hosting cloud	Deploy backend
-GitHub	Control de versiones
-dotenv	Variables de entorno
+```Bash
+-- Frontend | Uso
+-- Tecnología	Uso
+-- React	Interfaz de usuario
+-- TypeScript	Tipado y escalabilidad
+-- Tailwind CSS	Estilos rápidos y consistentes
+-- React Router	Navegación entre páginas
+-- Firebase Auth	Autenticación de usuarios
+-- Backend | Uso
+-- Tecnología	Uso
+-- Node.js	Servidor principal
+-- Express	API REST
+-- Firebase Admin	Verificación de tokens
+-- Firestore	Base de datos
+-- CORS	Comunicación frontend-backend
+-- Auxiliares | Uso
+-- Tecnología	Uso
+-- Vercel	Deploy frontend
+-- Render / Hosting cloud	Deploy backend
+-- GitHub	Control de versiones
+-- dotenv	Variables de entorno
+```
 ## Estructura del proyecto
 ```Bash
 flowbachata/
@@ -159,8 +165,6 @@ Configurar framework: Vite
 ```
 Añadir variable de entorno:
 
-Enlace: https://flowbachata.vercel.app/
-
 Deploy automático
 
 ### Backend
@@ -177,6 +181,10 @@ node dist/server.js
 
 Configurar variables de entorno (Firebase + puerto)
 ```
+### Deploy
+
+Enlace: https://flowbachata.vercel.app/
+
 ## Nota final
 
 FlowBachata está diseñada como una base de informacion en la que cualquier persona que desee adentrarse al mundo de la bachata y le falte un comunidad, entender como moverse y saber a que sitios ir, puede acudir a flowBachata.

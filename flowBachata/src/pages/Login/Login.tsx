@@ -36,8 +36,8 @@ export default function Login() {
         email: email,
       };
 
-      // 🔥 FIX PRINCIPAL (SOLO 1 ARGUMENTO)
-      login(userData);
+      // 🔥 FIX REAL DEL ERROR (2 argumentos como espera AuthContext)
+      login(userData, token);
 
       navigate("/dashboard", { replace: true });
 
@@ -50,24 +50,19 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-500 via-orange-500 to-yellow-400 relative">
 
-      {/* BOTÓN VOLVER */}
       <button
         onClick={() => navigate("/")}
         className="
           absolute top-6 right-6 px-5 py-2 rounded-xl font-semibold z-50
           bg-white text-orange-600 shadow-md
-          cursor-pointer select-none
           transform transition-all duration-300 ease-out
-          hover:scale-110
-          hover:-translate-y-2
-          hover:bg-orange-100
+          hover:scale-110 hover:-translate-y-2 hover:bg-orange-100
           active:scale-95
         "
       >
         ← Volver
       </button>
 
-      {/* CARD */}
       <div className="w-full max-w-md p-8 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl">
 
         <h1 className="text-3xl font-bold text-white text-center">
